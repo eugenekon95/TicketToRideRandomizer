@@ -15,7 +15,8 @@ class Wheel {
 
         this.geometry = new WheelGeometry(this.canvas, this.options.length);
         this.imageLoader = new ImageLoader(this.options);
-        this.renderer = new WheelRenderer(this.canvas, this.options, this.imageLoader.images, this.geometry);
+        const type = this.options[0] && this.options[0].image ? 'map' : 'difficulty';
+        this.renderer = new WheelRenderer(this.canvas, this.options, this.imageLoader.images, this.geometry, type);
         this.spinner = new WheelSpinner({
             options: this.options,
             geometry: this.geometry,

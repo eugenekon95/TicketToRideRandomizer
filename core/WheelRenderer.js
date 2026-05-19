@@ -1,12 +1,13 @@
 import { RENDERER_CONSTANTS } from './constants.js';
 
 class WheelRenderer {
-    constructor(canvas, options, images, geometry) {
+    constructor(canvas, options, images, geometry, type = 'map') {
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
         this.options = options;
         this.images = images;
         this.geometry = geometry;
+        this.type = type;
         this.winnerIndex = null;
         this.currentRotation = 0;
     }
@@ -94,7 +95,7 @@ class WheelRenderer {
         if (options[index].image) {
             this.drawMapImage(index, middleAngle, isWinner);
         }
-        this.drawMapName(options[index].name, middleAngle);
+        this.drawSectorLabel(options[index].name, middleAngle);
     }
 
     drawMapImage(index, angle, isWinner) {
@@ -169,15 +170,23 @@ class WheelRenderer {
         ctx.restore();
     }
 
-    drawMapName(name, angle) {
-        const { ctx, geometry } = this;
+    drawSectorLabel(name, angle) {
+        const { ctx, geometry, type } = this;
 
-        const textDistanceFromCenter = geometry.sectorRadius * 0.62;
+        const isDifficulty = type === 'difficulty';
+        const textDistanceFromCenter = isDifficulty ? geometry.sectorRadius * 0.8 : geometry.sectorRadius * 0.62;
         const textX = Math.cos(angle) * textDistanceFromCenter;
         const textY = Math.sin(angle) * textDistanceFromCenter;
 
         const lines = this.splitTextIntoLines(name);
-        const fontSize = this.canvas.width >= 500 ? 20 : 14;
+        
+        let fontSize;
+        if (isDifficulty) {
+             fontSize = this.canvas.width >= 500 ? 12 : 10;
+        } else {
+             fontSize = this.canvas.width >= 500 ? 16 : 14;
+        }
+
         const lineHeight = fontSize + 2;
         const maxTextWidth = Math.max(
             70,
@@ -197,7 +206,7 @@ class WheelRenderer {
         lines.forEach((line, index) => {
             const y = firstLineY + index * lineHeight;
 
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 4;
             ctx.strokeStyle = "rgba(45, 25, 12, 0.92)";
             ctx.strokeText(line, 0, y, maxTextWidth);
 
