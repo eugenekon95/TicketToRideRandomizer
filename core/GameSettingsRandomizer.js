@@ -2,6 +2,7 @@ import Wheel from './Wheel.js';
 import MAPS_CONFIG from '../config/maps-config.js';
 import DIFFICULTY_CONFIG from "../config/difficulty-config.js";
 import PLAYERS_CONFIG from "../config/players-config.js";
+import { DEFAULT_MAX_PLAYERS, TARGET_PLAYERS_COUNT, WHEEL_CANVAS_SIZE } from './constants.js';
 
 class GameSettingsRandomizer {
     constructor() {
@@ -47,7 +48,7 @@ class GameSettingsRandomizer {
 
         const livePlayers = parseInt(this.playersInput.value) || 0;
         const mapConfig = this.playersConfig.find(m => m.map === this.selectedMap.name);
-        const maxPlayers = mapConfig ? mapConfig.maxPlayers : 4;
+        const maxPlayers = mapConfig ? mapConfig.maxPlayers : DEFAULT_MAX_PLAYERS;
 
         let numWheels = 0;
 
@@ -58,7 +59,7 @@ class GameSettingsRandomizer {
 
         } else {
             // Need total 4 players
-            numWheels = Math.max(0, 4 - livePlayers);
+            numWheels = Math.max(0, TARGET_PLAYERS_COUNT - livePlayers);
         }
 
         this.wheelsContainer.innerHTML = '';
@@ -71,8 +72,8 @@ class GameSettingsRandomizer {
             wrapper.className = 'wheel-wrapper';
             
             const canvas = document.createElement('canvas');
-            canvas.width = 500;
-            canvas.height = 500;
+            canvas.width = WHEEL_CANVAS_SIZE;
+            canvas.height = WHEEL_CANVAS_SIZE;
             canvas.id = `difficultyWheelCanvas_${i}`;
             
             const button = document.createElement('button');

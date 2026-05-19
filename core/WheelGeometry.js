@@ -1,3 +1,5 @@
+import { GEOMETRY_CONSTANTS } from './constants.js';
+
 class WheelGeometry {
     constructor(canvas, count) {
         this.canvas = canvas;
@@ -5,10 +7,10 @@ class WheelGeometry {
         this.centerY = canvas.height / 2;
         this.radius = canvas.width / 2;
 
-        this.outerPadding = 10;
+        this.outerPadding = GEOMETRY_CONSTANTS.OUTER_PADDING;
         this.wheelRadius = this.radius - this.outerPadding;
-        this.sectorRadius = this.wheelRadius - 22;
-        this.innerRingRadius = 46;
+        this.sectorRadius = this.wheelRadius - GEOMETRY_CONSTANTS.SECTOR_RADIUS_OFFSET;
+        this.innerRingRadius = GEOMETRY_CONSTANTS.INNER_RING_RADIUS;
 
         this.sectorCount = count;
         this.sectorAngle = (Math.PI * 2) / this.sectorCount;

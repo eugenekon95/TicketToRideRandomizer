@@ -1,3 +1,5 @@
+import { SPINNER_CONSTANTS } from './constants.js';
+
 class WheelSpinner {
     constructor({ options, geometry, renderer, spinButton, tickSound, winSound, resultElement, onResult }) {
         this.options = options;
@@ -27,7 +29,7 @@ class WheelSpinner {
         this.renderer.setWinner(null);
 
         const randomIndex = Math.floor(Math.random() * this.geometry.sectorCount);
-        const extraSpins = 360 * 12;
+        const extraSpins = SPINNER_CONSTANTS.EXTRA_SPINS;
 
         const currentNormalizedRotation = this.geometry.normalizeDegrees(this.currentRotation);
         const targetNormalizedRotation = this.geometry.normalizeDegrees(
@@ -41,7 +43,7 @@ class WheelSpinner {
         const startRotation = this.currentRotation;
         const targetRotation = this.currentRotation + extraSpins + rotationDelta;
 
-        const duration = 9000;
+        const duration = SPINNER_CONSTANTS.DURATION;
         const start = performance.now();
 
         const animate = (time) => {
@@ -80,7 +82,7 @@ class WheelSpinner {
         const sectorUnderPointer = this.getSectorUnderPointer(normalizedRotation);
         const now = performance.now();
 
-        if (sectorUnderPointer !== this.lastSector && now - this.lastTickTime > 100) {
+        if (sectorUnderPointer !== this.lastSector && now - this.lastTickTime > SPINNER_CONSTANTS.TICK_INTERVAL) {
             this.tickSound.play();
 
             this.lastSector = sectorUnderPointer;

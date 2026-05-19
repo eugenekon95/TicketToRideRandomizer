@@ -1,3 +1,5 @@
+import { RENDERER_CONSTANTS } from './constants.js';
+
 class WheelRenderer {
     constructor(canvas, options, images, geometry) {
         this.canvas = canvas;
@@ -63,15 +65,15 @@ class WheelRenderer {
         ctx.closePath();
 
         const gradient = ctx.createRadialGradient(0, 0, 30, 0, 0, geometry.sectorRadius);
-        gradient.addColorStop(0, index % 2 === 0 ? "#b67c42" : "#d0a06d");
-        gradient.addColorStop(0.72, index % 2 === 0 ? "#95613a" : "#bd8f5f");
-        gradient.addColorStop(1, index % 2 === 0 ? "#744728" : "#9d6b42");
+        gradient.addColorStop(RENDERER_CONSTANTS.GRADIENT_STOPS[0], index % 2 === 0 ? "#b67c42" : "#d0a06d");
+        gradient.addColorStop(RENDERER_CONSTANTS.GRADIENT_STOPS[1], index % 2 === 0 ? "#95613a" : "#bd8f5f");
+        gradient.addColorStop(RENDERER_CONSTANTS.GRADIENT_STOPS[2], index % 2 === 0 ? "#744728" : "#9d6b42");
 
         ctx.fillStyle = gradient;
         ctx.fill();
 
         ctx.strokeStyle = "rgba(255, 245, 220, 0.78)";
-        ctx.lineWidth = 2;
+        ctx.lineWidth = RENDERER_CONSTANTS.DEFAULT_LINE_WIDTH;
         ctx.stroke();
 
         if (isWinner) {
@@ -84,7 +86,7 @@ class WheelRenderer {
             ctx.fill();
 
             ctx.strokeStyle = "rgba(255, 245, 120, 0.95)";
-            ctx.lineWidth = 4;
+            ctx.lineWidth = RENDERER_CONSTANTS.HIGHLIGHT_LINE_WIDTH;
             ctx.stroke();
             ctx.restore();
         }
@@ -99,10 +101,10 @@ class WheelRenderer {
         const { ctx, geometry, images } = this;
         const image = images[index];
 
-        const imageWidth = isWinner ? 80 : 66;
-        const imageHeight = isWinner ? 50 : 41;
+        const imageWidth = isWinner ? RENDERER_CONSTANTS.IMAGE_SIZE.WINNER.width : RENDERER_CONSTANTS.IMAGE_SIZE.NORMAL.width;
+        const imageHeight = isWinner ? RENDERER_CONSTANTS.IMAGE_SIZE.WINNER.height : RENDERER_CONSTANTS.IMAGE_SIZE.NORMAL.height;
 
-        const imageDistanceFromCenter = geometry.sectorRadius * 0.64;
+        const imageDistanceFromCenter = geometry.sectorRadius * RENDERER_CONSTANTS.IMAGE_DISTANCE_FACTOR;
         const imageX = Math.cos(angle) * imageDistanceFromCenter;
         const imageY = Math.sin(angle) * imageDistanceFromCenter;
 
