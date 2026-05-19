@@ -9,29 +9,39 @@
 <body>
 
 <div class="container">
-    <h1>Ticket To Ride Map Randomizer</h1>
+    <header class="card">
+        <h1>Ticket To Ride Map Randomizer</h1>
+    </header>
 
-    <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="wheelCanvas" width="500" height="500"></canvas>
-        <button id="spinBtn">SPIN ROUTE</button>
-    </div>
+    <section class="card main-wheel-card">
+        <div class="wheel-wrapper">
+            <div class="pointer"></div>
+            <canvas id="wheelCanvas" width="500" height="500"></canvas>
+            <button id="spinBtn">SPIN ROUTE</button>
+        </div>
 
-    <div class="controls">
-        <label for="playersInput">Live Players:</label>
-        <input type="number" id="playersInput" min="1" max="4" value="1">
-    </div>
+        <div class="controls">
+            <label for="playersInput">Live Players:</label>
+            <input type="number" id="playersInput" min="1" max="4" value="1">
+        </div>
+    </section>
 
-    <div id="difficultyWheelsContainer" class="wheels-container">
-        <!-- Difficulty wheels will be injected here -->
-    </div>
+    <section class="card difficulty-card">
+        <div id="difficultyWheelsContainer" class="wheels-container">
+            <!-- Difficulty wheels will be injected here -->
+        </div>
+    </section>
 
-    <div id="result"></div>
+    <section class="card result-card">
+        <div id="result"></div>
+    </section>
 
-    <div id="history" class="history-container">
-        <h3>History</h3>
-        <ul id="historyList"></ul>
-    </div>
+    <section class="card history-card">
+        <div id="history">
+            <h3>History</h3>
+            <ul id="historyList"></ul>
+        </div>
+    </section>
 </div>
 
 <audio id="tickSound" src="sounds/tic.mp3"></audio>

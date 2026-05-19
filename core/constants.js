@@ -1,6 +1,7 @@
 export const DEFAULT_MAX_PLAYERS = 4;
 export const TARGET_PLAYERS_COUNT = 4;
 export const WHEEL_CANVAS_SIZE = 500;
+export const DIFFICULTY_WHEEL_CANVAS_SIZE = 250;
 
 export const GEOMETRY_CONSTANTS = {
     OUTER_PADDING: 10,

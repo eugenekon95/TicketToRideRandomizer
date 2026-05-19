@@ -172,14 +172,17 @@ class WheelRenderer {
     drawMapName(name, angle) {
         const { ctx, geometry } = this;
 
-        const textDistanceFromCenter = geometry.sectorRadius * 0.40;
+        const textDistanceFromCenter = geometry.sectorRadius * 0.62;
         const textX = Math.cos(angle) * textDistanceFromCenter;
         const textY = Math.sin(angle) * textDistanceFromCenter;
 
         const lines = this.splitTextIntoLines(name);
-        const fontSize = 10;
-        const lineHeight = 12;
-        const maxTextWidth = Math.max(46, geometry.sectorRadius * Math.sin(geometry.sectorAngle / 2) * 0.64);
+        const fontSize = this.canvas.width >= 500 ? 20 : 14;
+        const lineHeight = fontSize + 2;
+        const maxTextWidth = Math.max(
+            70,
+            geometry.sectorRadius * Math.sin(geometry.sectorAngle / 2) * 0.9
+        );
 
         ctx.save();
         ctx.translate(textX, textY);

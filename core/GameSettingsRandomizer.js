@@ -2,7 +2,7 @@ import Wheel from './Wheel.js';
 import MAPS_CONFIG from '../config/maps-config.js';
 import DIFFICULTY_CONFIG from "../config/difficulty-config.js";
 import PLAYERS_CONFIG from "../config/players-config.js";
-import { DEFAULT_MAX_PLAYERS, TARGET_PLAYERS_COUNT, WHEEL_CANVAS_SIZE } from './constants.js';
+import { DEFAULT_MAX_PLAYERS, TARGET_PLAYERS_COUNT, WHEEL_CANVAS_SIZE, DIFFICULTY_WHEEL_CANVAS_SIZE } from './constants.js';
 
 class GameSettingsRandomizer {
     constructor() {
@@ -41,6 +41,7 @@ class GameSettingsRandomizer {
         this.selectedMap = null;
         this.selectedDifficulties = [];
         this.neededWheels = 0;
+        this.lastAddedResult = null;
     }
 
     renderDifficultyWheels() {
@@ -72,8 +73,8 @@ class GameSettingsRandomizer {
             wrapper.className = 'wheel-wrapper';
             
             const canvas = document.createElement('canvas');
-            canvas.width = WHEEL_CANVAS_SIZE;
-            canvas.height = WHEEL_CANVAS_SIZE;
+            canvas.width = DIFFICULTY_WHEEL_CANVAS_SIZE;
+            canvas.height = DIFFICULTY_WHEEL_CANVAS_SIZE;
             canvas.id = `difficultyWheelCanvas_${i}`;
             
             const button = document.createElement('button');
@@ -113,11 +114,15 @@ class GameSettingsRandomizer {
                             (this.selectedDifficulties.length === this.neededWheels && this.selectedDifficulties.every(d => d));
         
         if (this.selectedMap && allSelected) {
-            this.addHistory(text);
+            if (this.lastAddedResult !== text) {
+                this.addHistory(text);
+                this.lastAddedResult = text;
+            }
         }
     }
 
     addHistory(text) {
+        this.historyList.innerHTML = '';
         const li = document.createElement('li');
         li.textContent = `${new Date().toLocaleTimeString()}: ${text}`;
         this.historyList.prepend(li);

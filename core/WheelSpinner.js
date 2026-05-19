@@ -27,6 +27,7 @@ class WheelSpinner {
         this.resultElement.textContent = "";
         this.spinButton.disabled = true;
         this.renderer.setWinner(null);
+        this.renderer.canvas.classList.add('spinning');
 
         const randomIndex = Math.floor(Math.random() * this.geometry.sectorCount);
         const extraSpins = SPINNER_CONSTANTS.EXTRA_SPINS;
@@ -72,6 +73,7 @@ class WheelSpinner {
 
             this.spinning = false;
             this.spinButton.disabled = false;
+            this.renderer.canvas.classList.remove('spinning');
         };
 
         requestAnimationFrame(animate);
